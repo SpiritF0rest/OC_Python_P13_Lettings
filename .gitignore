@@ -4,3 +4,7 @@ venv
 
 #pycharm configuration
 .idea/
+
+#coverage folder and files
+.coverage
+htmlcov/
