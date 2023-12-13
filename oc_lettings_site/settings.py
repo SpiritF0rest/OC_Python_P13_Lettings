@@ -1,6 +1,12 @@
+import logging
 import os
-
 from pathlib import Path
+
+import sentry_sdk
+from dotenv import load_dotenv
+from sentry_sdk.integrations.logging import LoggingIntegration
+
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
+django_key = os.getenv("SECRET_KEY")
+SECRET_KEY = django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -114,3 +121,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static",]
+
+# Logging configuration
+
+logging.basicConfig(level=logging.INFO)
+
+# Sentry configuration
+
+dsn = os.getenv("SENTRY_DSN")
+
+sentry_sdk.init(
+    dsn=dsn,
+    enable_tracing=True,
+    integrations=[
+        LoggingIntegration(
+            level=logging.INFO,
+            event_level=logging.INFO
+        ),
+    ],
+)
