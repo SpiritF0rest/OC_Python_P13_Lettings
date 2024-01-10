@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import logging
 
 
 # Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque molestie quam lobortis leo
@@ -16,4 +17,18 @@ def index(request):
     Returns:
         HttpResponse whose content is filled with the result of calling with the passed arguments.
     """
+    return render(request, 'index.html')
+
+
+def sentry_test(request):
+    """Allows you to test logs to Sentry.
+
+    Args:
+        request: HttpRequest
+
+    Returns:
+        HttpResponse whose content is filled with the result of calling with the passed arguments.
+    """
+    logging.info("I am a breadcrumb")
+    logging.error("I am an event", extra=dict(bar=43))
     return render(request, 'index.html')

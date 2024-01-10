@@ -8,4 +8,5 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     path('lettings/', include('lettings.urls')),
     path('admin/', admin.site.urls),
+    path('sentry-test/', views.sentry_test, name='sentry_test'),
 ]
