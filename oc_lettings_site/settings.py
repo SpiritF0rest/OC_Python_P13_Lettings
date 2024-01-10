@@ -4,6 +4,7 @@ from pathlib import Path
 
 import sentry_sdk
 from dotenv import load_dotenv
+from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 
 load_dotenv()
@@ -138,5 +139,10 @@ sentry_sdk.init(
             level=logging.INFO,
             event_level=logging.INFO
         ),
+        DjangoIntegration(
+            transaction_style='url',
+            signals_spans=False,
+            cache_spans=False,
+        )
     ],
 )

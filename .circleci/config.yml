@@ -1,0 +1,22 @@
+version: 2.1
+orbs:
+  python: circleci/python@2.1.1
+
+jobs:
+  build_and_test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run tests
+          command: poetry run coverage run -m pytest
+      - run:
+          name: Coverage report
+          command: poetry run coverage report
+
+workflows:
+  main:
+    jobs:
+      - build_and_test
