@@ -31,4 +31,4 @@ def sentry_test(request):
     """
     logging.info("I am a breadcrumb")
     logging.error("I am an event", extra=dict(bar=43))
-    return render(request, 'index.html')
+    return render(request, 'sentry_test.html')
