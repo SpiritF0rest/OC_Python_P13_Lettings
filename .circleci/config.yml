@@ -3,20 +3,51 @@ orbs:
   python: circleci/python@2.1.1
 
 jobs:
-  build_and_test:
+  install-dependencies:
     executor: python/default
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
+      - save_cache:
+          key: v1-dependencies-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          paths:
+            - /tmp/oc_lettings
+  test:
+    executor: python/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
       - run:
           name: Coverage report
           command: poetry run coverage report
+      - run:
+          name: Coverage HTML
+          command: poetry run coverage html
+      - store_artifacts:
+          path: htmlcov
+        
+  linting:
+    executor: python/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - run:
+          name: Linting
+          command: poetry run flake8
 
 workflows:
-  main:
+  build-test-and-deploy:
     jobs:
-      - build_and_test
+      - install-dependencies
+      - test:
+          requires:
+            - install-dependencies
+      - linting:
+          requires:
+            - install-dependencies
