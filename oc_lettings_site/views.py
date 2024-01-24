@@ -1,5 +1,6 @@
 from django.shortcuts import render
-import logging
+
+from oc_lettings_site import logger
 
 
 # Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque molestie quam lobortis leo
@@ -29,6 +30,6 @@ def sentry_test(request):
     Returns:
         HttpResponse whose content is filled with the result of calling with the passed arguments.
     """
-    logging.info("I am a breadcrumb")
-    logging.error("I am an event", extra=dict(bar=43))
+    logger.info("I am a breadcrumb")
+    logger.error("I am an event", extra=dict(bar=43))
     return render(request, 'sentry_test.html')
