@@ -10,9 +10,9 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
-          key: v1-dependencies-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
-            - /tmp/oc_lettings
+            - .venv
   test:
     executor: python/default
     steps:
@@ -30,7 +30,7 @@ jobs:
           command: poetry run coverage html
       - store_artifacts:
           path: htmlcov
-        
+
   linting:
     executor: python/default
     steps:

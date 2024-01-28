@@ -1,0 +1,16 @@
+# Ignore everything
+*
+
+# Allow files and directories
+!lettings
+!oc_lettings_site
+!profiles
+!static
+!templates
+!Dockerfile
+!manage.py
+!oc-lettings-site.sqlite3
+!poetry.lock
+!pyproject.toml
+!README.md
+!setup.cfg
