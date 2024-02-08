@@ -11,6 +11,9 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
+      - run:
+          name: activate venv
+          command: source .venv/bin/activate
       - save_cache:
           key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
