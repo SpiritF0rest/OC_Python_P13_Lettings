@@ -11,9 +11,6 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
-      - run:
-          name: activate venv
-          command: source $(poetry env info --path)/bin/activate
       - save_cache:
           key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
@@ -27,6 +24,9 @@ jobs:
       - checkout
       - restore_cache:
           key: v1-dependencies-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - run:
+          name: activate venv
+          command: source $(poetry env info --path)/bin/activate
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
@@ -47,6 +47,9 @@ jobs:
       - checkout
       - restore_cache:
           key: v1-dependencies-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - run:
+          name: activate venv
+          command: source $(poetry env info --path)/bin/activate
       - run:
           name: Linting
           command: poetry run flake8
