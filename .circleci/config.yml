@@ -4,8 +4,9 @@ orbs:
 
 jobs:
   install-dependencies:
-    executor: python/default
-    tag: "3.11"
+    executor:
+      name: python/default
+      tag: "3.11"
     steps:
       - checkout
       - python/install-packages:
@@ -16,8 +17,9 @@ jobs:
             - $POETRY_CACHE_DIR
             - .venv
   test:
-    executor: python/default
-    tag: "3.11"
+    executor:
+      name: python/default
+      tag: "3.11"
     steps:
       - checkout
       - restore_cache:
@@ -35,8 +37,9 @@ jobs:
           path: htmlcov
 
   linting:
-    executor: python/default
-    tag: "3.11"
+    executor:
+      name: python/default
+      tag: "3.11"
     steps:
       - checkout
       - restore_cache:
