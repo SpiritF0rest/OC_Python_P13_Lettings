@@ -26,7 +26,7 @@ jobs:
           key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: activate venv
-          command: source $(poetry env info --path)/bin/activate
+          command: .venv/bin/activate
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
@@ -49,7 +49,7 @@ jobs:
           key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: activate venv
-          command: source $(poetry env info --path)/bin/activate
+          command: .venv/bin/activate
       - run:
           name: Linting
           command: poetry run flake8
