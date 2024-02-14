@@ -46,7 +46,7 @@ jobs:
           key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Activate virtual env
-          command: source .venv/bin/activate
+          command: source /home/circleci/project/.venv/bin/activate
       - run:
           name: Linting
           command: poetry run flake8
