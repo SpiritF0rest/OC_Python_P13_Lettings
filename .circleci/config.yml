@@ -12,10 +12,9 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
-          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
             - $POETRY_CACHE_DIR
-            - .venv
   test:
     executor:
       name: python/default
@@ -24,8 +23,8 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
-#      - restore_cache:
-#          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - restore_cache:
+          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
@@ -46,8 +45,8 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
-#      - restore_cache:
-#          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - restore_cache:
+          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Linting
           command: poetry run flake8
