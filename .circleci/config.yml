@@ -15,7 +15,7 @@ jobs:
           name: Put venv in project
           command: poetry config virtualenvs.in-project true
       - save_cache:
-          key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
             - $POETRY_CACHE_DIR
             - .venv
@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Linting
           command: poetry run flake8
