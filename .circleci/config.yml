@@ -46,7 +46,7 @@ jobs:
           key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: where I am
-          command: ls -la
+          command: pwd
       - run:
           name: Activate virtual env
           command: source /.venv/bin/activate
