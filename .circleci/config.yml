@@ -22,8 +22,10 @@ jobs:
       tag: "3.11"
     steps:
       - checkout
-      - restore_cache:
-          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - python/install-packages:
+          pkg-manager: poetry
+#      - restore_cache:
+#          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
@@ -42,14 +44,10 @@ jobs:
       tag: "3.11"
     steps:
       - checkout
-      - restore_cache:
-          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
-      - run:
-          name: where I am
-          command: pwd
-      - run:
-          name: Activate virtual env
-          command: source /.venv/bin/activate
+      - python/install-packages:
+          pkg-manager: poetry
+#      - restore_cache:
+#          key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Linting
           command: poetry run flake8
