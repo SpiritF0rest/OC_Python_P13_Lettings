@@ -11,6 +11,9 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
+      - run:
+          name: Put venv in project
+          command: poetry config virtualenvs.in-project true
       - save_cache:
           key: v1-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
