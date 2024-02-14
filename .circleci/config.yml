@@ -45,6 +45,9 @@ jobs:
       - restore_cache:
           key: v2-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
+          name: where I am
+          command: ls
+      - run:
           name: Activate virtual env
           command: source /.venv/bin/activate
       - run:
