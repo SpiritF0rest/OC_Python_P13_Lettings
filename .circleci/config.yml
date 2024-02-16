@@ -51,7 +51,24 @@ jobs:
           name: Linting
           command: poetry run flake8
 
-#  build-and-publish:
+  build-and-publish:
+    docker:
+      - image: cimg/base:2024.01
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_TOKEN
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - run:
+          name: Build and push application Docker image
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t $DOCKERHUB_USERNAME/oc-lettings-site:$TAG --build-arg POETRY_CACHE_DIR=$POETRY_CACHE_DIR .
+            echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push $DOCKERHUB_USERNAME/oc-lettings-site:$TAG
 
 workflows:
   build-test-and-deploy:
@@ -63,3 +80,7 @@ workflows:
       - linting:
           requires:
             - install-dependencies
+      - build-and-publish:
+          requires:
+            - test
+            - linting
