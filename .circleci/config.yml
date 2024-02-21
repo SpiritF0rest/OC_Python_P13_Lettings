@@ -82,7 +82,7 @@ jobs:
             TAG=0.1.$CIRCLE_BUILD_NUM
             curl -v -G \
               --data-urlencode "key=${RENDER_KEY}" \
-              --data-urlencode "imgURL=${DOCKERHUB_USERNAME}/oc-lettings-site:${TAG}" \
+              --data-urlencode "imgURL=docker.io/${DOCKERHUB_USERNAME}/oc-lettings-site:${TAG}" \
               "${RENDER_URL}"
 
 workflows:
