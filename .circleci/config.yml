@@ -79,7 +79,7 @@ jobs:
           name: Deploy to render
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            curl -X POST "${RENDER_URL}&imgURL=${DOCKERHUB_USERNAME}/oc-lettings-site:${TAG}"
+            curl -X POST "${RENDER_URL}&imgURL=${DOCKERHUB_USERNAME}%2Foc-lettings-site%3A${TAG}"
 
 workflows:
   build-test-and-deploy:
