@@ -78,7 +78,6 @@ jobs:
       - run:
           name: Deploy to render
           command: |
-            set -e 
             TAG=$CIRCLE_SHA1
             curl -v -G \
               --data-urlencode "key=${RENDER_KEY}" \
