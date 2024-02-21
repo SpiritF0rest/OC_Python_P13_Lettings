@@ -80,7 +80,7 @@ jobs:
           command: |
             set -e 
             TAG=0.1.$CIRCLE_BUILD_NUM
-            curl -v --request POST \
+            curl -v -G \
               --data-urlencode "key=${RENDER_KEY}" \
               --data-urlencode "imgURL=${DOCKERHUB_USERNAME}/oc-lettings-site:${TAG}" \
               "${RENDER_URL}"
