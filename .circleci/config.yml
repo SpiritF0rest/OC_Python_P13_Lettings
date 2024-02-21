@@ -54,9 +54,6 @@ jobs:
   build-and-publish:
     docker:
       - image: cimg/base:2024.01
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_TOKEN
     steps:
       - checkout
       - setup_remote_docker
@@ -69,6 +66,20 @@ jobs:
             docker build -t $DOCKERHUB_USERNAME/oc-lettings-site:$TAG --build-arg POETRY_CACHE_DIR=$POETRY_CACHE_DIR .
             echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push $DOCKERHUB_USERNAME/oc-lettings-site:$TAG
+
+  deploy:
+    docker:
+      - image: cimg/base:2024.01
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+      - run:
+          name: Deploy to render
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            curl -X POST "${RENDER_URL}&imgURL=$DOCKERHUB_USERNAME/oc-lettings-site:$TAG"
 
 workflows:
   build-test-and-deploy:
@@ -84,3 +95,14 @@ workflows:
           requires:
             - test
             - linting
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - build-and-publish
+          filters:
+            branches:
+              only:
+                - master

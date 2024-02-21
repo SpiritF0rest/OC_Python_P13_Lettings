@@ -22,7 +22,8 @@ SECRET_KEY = django_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+hosts = os.getenv("ALLOWED_HOSTS").split(", ")
+ALLOWED_HOSTS = hosts
 
 
 # Application definition
