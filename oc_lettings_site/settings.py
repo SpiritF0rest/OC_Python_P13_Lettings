@@ -24,7 +24,7 @@ DEBUG = False
 
 hosts = os.getenv("ALLOWED_HOSTS").split(", ")
 ALLOWED_HOSTS = hosts
-
+CSRF_TRUSTED_ORIGINS = hosts
 
 # Application definition
 
