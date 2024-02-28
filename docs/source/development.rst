@@ -67,7 +67,9 @@ To generate Flake 8 report:
 
 To see coverage:
     :code:`poetry run coverage run -m pytest`
+
     :code:`poetry run coverage report`
+
     :code:`poetry run coverage html`
 
 Admin panel

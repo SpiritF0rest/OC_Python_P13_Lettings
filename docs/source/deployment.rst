@@ -7,16 +7,12 @@ Docker Hub, CircleCi and Render accounts.
 
 Docker Hub
 ----------
-In **My Account**, go to Security and create a New Access Token
+In **My Account**, go to Security and retrieve your Access Token
 
 Render
 ------
-Click on New +.
-Create a new Web Service.
-Build and deploy from a Git repository.
-Choice your repository and in advanced: dismiss deploy at every commit.
 
-In project Environment, add these variables.
+In project Environment, you can manage these variables.
 
 - ALLOWED_HOSTS: String like in .env
 - SECRET_KEY: Django Key like in .env
@@ -25,8 +21,8 @@ In project Environment, add these variables.
 
 Circle CI
 ---------
-Create a project linked to your github repository.
-In project settings, go to Environment Variables and add these variables.
+
+In project settings, go to Environment Variables and manage these variables.
 
 - ALLOWED_HOSTS: String like in .env
 - CSRF_TRUSTED_ORIGINS:  String like in .env
@@ -52,3 +48,9 @@ To build your local image:
 To run this image (ALLOWED_HOSTS is a string contains hosts):
     :code:`docker run --rm -e SECRET_KEY='django_secret_key' -e ALLOWED_HOSTS="localhost, 127.0.0.1, 0.0.0.0:8000" -p 8000:8000 your-image-name`
 
+Pipeline workflow
+-----------------
+
+build-and-publish : build Docker image and publish it to Docker Hub
+
+deploy : deploy to render with new Docker image using deploy hook
