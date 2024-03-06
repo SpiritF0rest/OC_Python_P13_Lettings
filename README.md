@@ -1,77 +1,173 @@
-## Résumé
+# :desktop_computer: Lettings :desktop_computer:
 
-Site web d'Orange County Lettings
+Orange-county-letting’s is a start-up in the real estate rental industry. 
 
-## Développement local
+***
+## Table of Contents
+1. [General Info](#general-info)
+2. [Technologies](#technologies)
+3. [Installation](#installation)
+4. [Tests](#tests)
+5. [Admin](#admin)
+6. [Database](#database)
+7. [Deployment](#deployment)
 
-### Prérequis
+### :newspaper: General Info :newspaper:
+***
+It is an OpenClassrooms project whose goal is to scale an existing application using a modular architecture and deploy it.
 
-- Compte GitHub avec accès en lecture à ce repository
-- Git CLI
-- SQLite3 CLI
-- Interpréteur Python, version 3.6 ou supérieure
+### :briefcase: Technologies :briefcase:
+*** 
+- [Python](https://www.python.org/): Version ^3.11
+- [Django](https://docs.djangoproject.com/en/5.0/): Version ^5.0
+- [Python-dotenv](https://pypi.org/project/python-dotenv/): Version ^1.0.0
+- [Sentry-sdk](https://pypi.org/project/sentry-sdk/1.35.0/): Version ^1.39.0
+- [Whitenoise](https://pypi.org/project/whitenoise/): Version ^6.6.0
+- [Sphinx](https://www.sphinx-doc.org/en/master/index.html): Version ^7.2.6
+- [Sphinxcontrib-django](https://pypi.org/project/sphinxcontrib-django/): Version ^2.5
+- [Pytest-django](https://pypi.org/project/pytest-django/): Version ^4.7.0
+- [Flake8](https://pypi.org/project/flake8/): Version ^6.1.0
+- [Coverage](https://pypi.org/project/coverage/): Version ^7.3.2
+- [Poetry](https://python-poetry.org/): Version 1.7.1
+- [Docker](https://docs.docker.com/get-docker/): Version 25.0.2
 
-Dans le reste de la documentation sur le développement local, il est supposé que la commande `python` de votre OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement virtuel ne soit activé).
+### :wrench: Installation :wrench:
+***
+Prerequisites: Python, Poetry, Sentry
+***
+In your directory for the project:
 
-### macOS / Linux
+Clone repository from:
+- [OC Lettings](https://github.com/SpiritF0rest/OC_Python_P13_Lettings)
 
-#### Cloner le repository
+#### :wrench: Virtual environment and modules :wrench:
 
-- `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+```
+To install modules:
+$ poetry install
 
-#### Créer l'environnement virtuel
+To active the virtual environment (Linux):
+$ source $(poetry env info --path)/bin/activate
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
-- Activer l'environnement `source venv/bin/activate`
-- Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
-`which python`
-- Confirmer que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
-- Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
-- Pour désactiver l'environnement, `deactivate`
+To active the virtual environment (Windows Powershell):
+$ & ((poetry env info --path) + "\Scripts\activate.ps1")
 
-#### Exécuter le site
+To deactive the virtual environment: 
+$ deactivate
+```
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pip install --requirement requirements.txt`
-- `python manage.py runserver`
-- Aller sur `http://localhost:8000` dans un navigateur.
-- Confirmer que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
+#### :wrench: Dotenv :wrench:
 
-#### Linting
+```
+Copy the .env.example in a .env file and fill with the correct data:
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `flake8`
+SENTRY_DSN : Expected URL
+SECRET_KEY : Expected String like "very_strong_key"
+ALLOWED_HOSTS : Expected String like "localhost, 127.0.0.1"
+CSRF_TRUSTED_ORIGINS : Expected String like "https://site.onrender.com"
+```
 
-#### Tests unitaires
+#### :wrench: Run :wrench:
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pytest`
+```
+$ python3 manage.py runserver
+```
+Now, you can use the app :tada:
 
-#### Base de données
+### :newspaper: Tests :newspaper:
+***
+```
+To test:
+$ poetry run pytest
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
-- Afficher les tables dans la base de données `.tables`
-- Afficher les colonnes dans le tableau des profils, `pragma table_info(Python-OC-Lettings-FR_profile);`
-- Lancer une requête sur la table des profils, `select user_id, favorite_city from
-  Python-OC-Lettings-FR_profile where favorite_city like 'B%';`
-- `.quit` pour quitter
+To generate Flake 8 report:
+$ poetry run flake8
 
-#### Panel d'administration
+To see coverage:
+$ poetry run coverage run -m pytest
+$ poetry run coverage report
+$ poetry run coverage html
+```
 
-- Aller sur `http://localhost:8000/admin`
-- Connectez-vous avec l'utilisateur `admin`, mot de passe `Abc1234!`
+### :lock: Admin :lock:
+***
+Go to http://localhost:8000/admin`
+```
+User: admin
+Password: Abc1234!
+```
 
-### Windows
+### :wrench: Database :wrench:
+***
+```
+$ cd /path/to/project
 
-Utilisation de PowerShell, comme ci-dessus sauf :
+Open a shell session
+$ sqlite3
 
-- Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
-- Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+Connect to the database
+$ .open oc-lettings-site.sqlite3
+
+Display tables
+$ .tables
+
+Display columns in profiles tables
+$ pragma table_info(oc_lettings_site_profile);
+
+Run request on profiles tables
+$ select user_id, favorite_city from oc_lettings_site_profile where favorite_city like 'B%';
+
+Quit
+$ .quit
+
+```
+
+### :wrench: Deployment :wrench:
+***
+Prerequisites: Docker Hub, CircleCI and Render accounts.
+***
+#### :wrench: Docker Hub :wrench:
+
+In My Account, go to Security and retrieve your Access Token
+
+#### :wrench: Render :wrench:
+
+In project Environment, you can manage these variables.
+```
+ALLOWED_HOSTS: String like in .env
+SECRET_KEY: Django Key like in .env
+SENTRY_DSN: URL like in .env
+CSRF_TRUSTED_ORIGINS: String like in .env
+```
+
+#### :wrench: Circle CI :wrench:
+
+In project settings, go to Environment Variables and manage these variables.
+```
+ALLOWED_HOSTS: String like in .env
+CSRF_TRUSTED_ORIGINS: String like in .env
+DOCKERHUB_TOKEN: Your Docker Hub access token
+DOCKERHUB_USERNAME: Your Docker Hub username
+POETRY_CACHE_DIR: Path to cache directory
+POETRY_VIRTUALENVS_IN_PROJECT: 1
+RENDER_KEY: Deploy Hook (in render project settings)
+RENDER_URL: Your render URL
+SECRET_KEY: Django Key like in .env
+SENTRY_DSN: URL like in .env
+```
+
+#### :wrench: Use :wrench:
+
+Build, publish and deploy jobs are only executed when you push commit to master branch.
+
+#### :wrench: Docker command (local) :wrench:
+```
+To build your local image:
+$ docker build -t your-image-name --build-arg POETRY_CACHE_DIR=path/to/cache/dir .
+
+To run this image (ALLOWED_HOSTS is a string contains hosts):
+$ docker run --rm -e SECRET_KEY='django_secret_key' -e ALLOWED_HOSTS="localhost, 127.0.0.1, 0.0.0.0:8000" -p 8000:8000 your-image-name
+
+```
+
+:snake: Enjoy :snake:
