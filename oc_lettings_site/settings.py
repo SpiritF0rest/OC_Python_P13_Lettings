@@ -27,6 +27,9 @@ ALLOWED_HOSTS = hosts
 trusted_origin = os.getenv("CSRF_TRUSTED_ORIGINS").split(", ")
 CSRF_TRUSTED_ORIGINS = trusted_origin
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 # Application definition
 
 INSTALLED_APPS = [
