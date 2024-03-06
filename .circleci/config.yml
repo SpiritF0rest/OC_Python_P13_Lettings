@@ -12,7 +12,7 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - save_cache:
-          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v4-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
           paths:
             - $POETRY_CACHE_DIR
   test:
@@ -24,7 +24,7 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - restore_cache:
-          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v4-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Run tests
           command: poetry run coverage run -m pytest
@@ -46,7 +46,7 @@ jobs:
       - python/install-packages:
           pkg-manager: poetry
       - restore_cache:
-          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v4-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Linting
           command: poetry run flake8
@@ -58,7 +58,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - restore_cache:
-          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v4-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Build and push application Docker image
           command: |
@@ -74,7 +74,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - restore_cache:
-          key: v3-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          key: v4-lettings-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
       - run:
           name: Deploy to render
           command: |
