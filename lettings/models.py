@@ -25,7 +25,7 @@ class Address(models.Model):
 
     class Meta:
         # avoids bad pluralization
-        verbose_name_plural = "Address"
+        verbose_name_plural = "Addresses"
 
     def __str__(self):
         return f'{self.number} {self.street}'
